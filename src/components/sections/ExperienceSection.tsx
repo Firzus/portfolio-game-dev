@@ -1,8 +1,6 @@
-import { getAllExperiences } from '@/lib/db/queries'
+import { experiences } from '@/lib/data/portfolio-data'
 import ExperienceClient from './ExperienceClient'
 
 export default async function ExperienceSection() {
-  const experiences = await getAllExperiences()
-
   return <ExperienceClient experiences={experiences} />
 }

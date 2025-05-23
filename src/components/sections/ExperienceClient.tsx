@@ -2,19 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Calendar, MapPin, ArrowRight } from 'lucide-react'
-
-interface Experience {
-  id: number
-  company: string
-  position: string
-  description: string
-  technologies: string[]
-  startDate: string
-  endDate?: string | null
-  logoUrl?: string | null
-  location: string
-  createdAt: Date
-}
+import { Experience } from '@/types'
 
 interface ExperienceClientProps {
   experiences: Experience[]
@@ -43,49 +31,22 @@ const itemVariants = {
   }
 }
 
-const getTechColor = (tech: string) => {
-  const techColors: Record<string, string> = {
-    'Unity': 'vite-tag',
-    'C#': 'vite-tag-purple',
-    'React': 'vite-tag-green',
-    'Next.js': 'vite-tag-green',
-    'TypeScript': 'vite-tag',
-    'Node.js': 'vite-tag-green',
-    'Vue.js': 'vite-tag-green',
-    'Python': 'vite-tag-orange',
-    'Unreal Engine': 'vite-tag-purple',
-    'C++': 'vite-tag',
-    'Perforce': 'vite-tag-orange',
-    'JIRA': 'vite-tag-orange',
-    'Git': 'vite-tag',
-    'Trello': 'vite-tag-orange',
-    'Blender': 'vite-tag-orange',
-    'PostgreSQL': 'vite-tag',
-    'AWS': 'vite-tag-orange',
-    'Docker': 'vite-tag',
-    'Express': 'vite-tag-green',
-    'Blueprint': 'vite-tag-purple',
-    'Various': 'vite-tag'
-  }
-  return techColors[tech] || 'vite-tag'
-}
-
 export default function ExperienceClient({ experiences }: ExperienceClientProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString('fr-FR', { 
-      year: 'numeric', 
-      month: 'long' 
+    return date.toLocaleDateString('fr-FR', {
+      year: 'numeric',
+      month: 'long'
     })
   }
 
   const calculateDuration = (startDate: string, endDate?: string | null) => {
     const start = new Date(startDate)
     const end = endDate ? new Date(endDate) : new Date()
-    
+
     const diffTime = Math.abs(end.getTime() - start.getTime())
     const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30))
-    
+
     if (diffMonths < 12) {
       return `${diffMonths} mois`
     } else {
@@ -109,13 +70,13 @@ export default function ExperienceClient({ experiences }: ExperienceClientProps)
             Mon <span className="gradient-text">Parcours</span>
           </h2>
           <p className="vite-subheading text-center">
-            Découvrez mon expérience professionnelle et les projets sur lesquels j'ai travaillé
+            Découvrez mon expérience professionnelle et les projets sur lesquels j&apos;ai travaillé
           </p>
         </motion.div>
 
         {/* Experience Timeline */}
         <div className="space-y-8">
-          {experiences.map((experience, index) => (
+          {experiences.map((experience) => (
             <motion.div
               key={experience.id}
               variants={itemVariants}
@@ -125,7 +86,7 @@ export default function ExperienceClient({ experiences }: ExperienceClientProps)
                 {/* Company Logo/Icon */}
                 <div className="flex-shrink-0">
                   <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#42d392]/20 to-[#647eff]/20 flex items-center justify-center">
-                    {experience.logoUrl ? (
+                    {experience.logo ? (
                       <div className="w-full h-full bg-white/5 rounded-xl flex items-center justify-center">
                         <span className="text-white/60 text-xs">Logo</span>
                       </div>
@@ -147,7 +108,7 @@ export default function ExperienceClient({ experiences }: ExperienceClientProps)
                     <p className="text-[#647eff] font-medium mb-3">
                       {experience.company}
                     </p>
-                    
+
                     {/* Date and Location */}
                     <div className="flex flex-wrap gap-4 text-sm text-white/60">
                       <div className="flex items-center gap-2">
@@ -168,25 +129,32 @@ export default function ExperienceClient({ experiences }: ExperienceClientProps)
                   </div>
 
                   {/* Description */}
-                  <p className="text-white/80 leading-relaxed">
+                  <p className="text-white/80 leading-relaxed mb-4">
                     {experience.description}
                   </p>
 
                   {/* Technologies */}
-                  <div>
-                    <h4 className="text-sm font-medium text-white/80 mb-3">
-                      Technologies utilisées :
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {experience.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className={`${getTechColor(tech)} text-xs`}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {experience.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="vite-tag text-xs"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Duration Badge */}
+                  <div className="flex items-center gap-2">
+                    <span className="vite-tag-green text-xs">
+                      {experience.endDate ? calculateDuration(experience.startDate, experience.endDate) : 'En cours'}
+                    </span>
+                    {!experience.endDate && (
+                      <span className="vite-tag text-xs">
+                        Poste actuel
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -194,8 +162,43 @@ export default function ExperienceClient({ experiences }: ExperienceClientProps)
           ))}
         </div>
 
+        {/* Experience Stats */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-16 pt-16 border-t border-white/10"
+        >
+          <div className="vite-grid vite-grid-2 lg:grid-cols-3">
+            {[
+              {
+                label: 'Années d&apos;Expérience',
+                value: experiences.reduce((total, exp) => {
+                  const years = parseInt(calculateDuration(exp.startDate, exp.endDate || new Date().toISOString()))
+                  return total + (isNaN(years) ? 1 : years)
+                }, 0).toString(),
+                description: 'Années dans le développement'
+              },
+              {
+                label: 'Entreprises',
+                value: experiences.length.toString(),
+                description: 'Expériences professionnelles'
+              },
+              {
+                label: 'Technologies',
+                value: new Set(experiences.flatMap(exp => exp.technologies)).size.toString(),
+                description: 'Technologies maîtrisées'
+              }
+            ].map((stat) => (
+              <div key={stat.label} className="vite-grid-item">
+                <h4 className="text-xl font-semibold text-white mb-2">{stat.label}</h4>
+                <p className="text-white/80 text-sm">{stat.value}</p>
+                <p className="text-white/60 text-xs">{stat.description}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
         {/* Call to Action */}
-        <motion.div 
+        <motion.div
           variants={itemVariants}
           className="text-center mt-16 pt-16 border-t border-white/10"
         >

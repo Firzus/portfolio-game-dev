@@ -2,19 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Calendar, MapPin, GraduationCap } from 'lucide-react'
-
-interface Education {
-  id: number
-  institution: string
-  degree: string
-  field: string
-  description?: string | null
-  startDate: string
-  endDate: string
-  logoUrl?: string | null
-  location: string
-  createdAt: Date
-}
+import { Education } from '@/types'
 
 interface EducationClientProps {
   education: Education[]
@@ -46,19 +34,19 @@ const itemVariants = {
 export default function EducationClient({ education }: EducationClientProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString('fr-FR', { 
-      year: 'numeric', 
-      month: 'long' 
+    return date.toLocaleDateString('fr-FR', {
+      year: 'numeric',
+      month: 'long'
     })
   }
 
   const calculateDuration = (startDate: string, endDate: string) => {
     const start = new Date(startDate)
     const end = new Date(endDate)
-    
+
     const diffTime = Math.abs(end.getTime() - start.getTime())
     const diffYears = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 365))
-    
+
     return diffYears === 1 ? '1 an' : `${diffYears} ans`
   }
 
@@ -82,7 +70,7 @@ export default function EducationClient({ education }: EducationClientProps) {
 
         {/* Education Timeline */}
         <div className="space-y-8">
-          {education.map((edu, index) => (
+          {education.map((edu) => (
             <motion.div
               key={edu.id}
               variants={itemVariants}
@@ -92,7 +80,7 @@ export default function EducationClient({ education }: EducationClientProps) {
                 {/* Institution Logo/Icon */}
                 <div className="flex-shrink-0">
                   <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#42d392]/20 to-[#647eff]/20 flex items-center justify-center">
-                    {edu.logoUrl ? (
+                    {edu.logo ? (
                       <div className="w-full h-full bg-white/5 rounded-xl flex items-center justify-center">
                         <span className="text-white/60 text-xs">Logo</span>
                       </div>
@@ -115,7 +103,7 @@ export default function EducationClient({ education }: EducationClientProps) {
                     <p className="text-[#42d392] font-medium mb-3">
                       {edu.institution}
                     </p>
-                    
+
                     {/* Date and Location */}
                     <div className="flex flex-wrap gap-4 text-sm text-white/60">
                       <div className="flex items-center gap-2">
@@ -157,37 +145,37 @@ export default function EducationClient({ education }: EducationClientProps) {
         </div>
 
         {/* Education Stats */}
-        <motion.div 
+        <motion.div
           variants={itemVariants}
           className="mt-16 pt-16 border-t border-white/10"
         >
           <div className="vite-grid vite-grid-2 lg:grid-cols-3">
             {[
-              { 
-                label: 'Formations Complétées', 
-                value: education.length.toString(), 
-                description: 'Diplômes et certifications obtenus' 
+              {
+                label: 'Formations Complétées',
+                value: education.length.toString(),
+                description: 'Diplômes et certifications obtenus'
               },
-              { 
-                label: 'Années d\'Études', 
+              {
+                label: 'Années d\'Études',
                 value: education.reduce((total, edu) => {
                   const years = parseInt(calculateDuration(edu.startDate, edu.endDate))
                   return total + (isNaN(years) ? 1 : years)
-                }, 0).toString(), 
-                description: 'Années consacrées à la formation' 
+                }, 0).toString(),
+                description: 'Années consacrées à la formation'
               },
-              { 
-                label: 'Domaines d\'Expertise', 
-                value: new Set(education.map(edu => edu.field)).size.toString(), 
-                description: 'Spécialisations acquises' 
+              {
+                label: 'Domaines d\'Expertise',
+                value: new Set(education.map(edu => edu.field)).size.toString(),
+                description: 'Spécialisations acquises'
               }
-            ].map((stat, index) => (
-              <motion.div 
-                key={stat.label} 
+            ].map((stat) => (
+              <motion.div
+                key={stat.label}
                 className="text-center vite-card p-6"
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}
               >
                 <div className="text-3xl font-bold gradient-text mb-2">

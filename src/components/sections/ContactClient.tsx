@@ -72,7 +72,11 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  const validateForm = () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    // Validate form inline
     const newErrors: Record<string, string> = {}
 
     if (!formData.name.trim()) {
@@ -96,18 +100,10 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
     }
 
     setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!validateForm()) {
+    if (Object.keys(newErrors).length > 0) {
+      setIsSubmitting(false)
       return
     }
-
-    setIsSubmitting(true)
-    setSubmitStatus('idle')
 
     try {
       const response = await fetch('/api/contact', {
@@ -117,6 +113,8 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
         },
         body: JSON.stringify(formData),
       })
+
+      const data = await response.json()
 
       if (response.ok) {
         setSubmitStatus('success')
@@ -128,10 +126,10 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
           newsletter: false
         })
       } else {
-        setSubmitStatus('error')
+        console.error('Error submitting form:', data.error)
       }
-    } catch (error) {
-      setSubmitStatus('error')
+    } catch (err) {
+      console.error('Network error:', err)
     } finally {
       setIsSubmitting(false)
     }
@@ -168,8 +166,8 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
           <h2 className="vite-heading text-center mb-6">
             Me <span className="gradient-text">Contacter</span>
           </h2>
-          <p className="vite-subheading text-center">
-            Une idée de projet ? Une opportunité ? N'hésitez pas à me contacter !
+          <p className="text-lg text-white/80 mb-6">
+            Vous avez un projet en tête ? Une question technique ? N&apos;hésitez pas à me contacter !
           </p>
         </motion.div>
 
@@ -180,7 +178,7 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
               <h3 className="text-2xl font-semibold text-white mb-6">
                 Informations de Contact
               </h3>
-              
+
               <div className="space-y-6">
                 {/* Email */}
                 <div className="flex items-center gap-4">
@@ -189,7 +187,7 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
                   </div>
                   <div>
                     <p className="text-white/60 text-sm">Email</p>
-                    <a 
+                    <a
                       href={`mailto:${personalInfo?.email}`}
                       className="text-white hover:text-[#647eff] transition-colors"
                     >
@@ -267,7 +265,9 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
                   className="flex items-center gap-3 p-4 bg-[#42d392]/10 border border-[#42d392]/20 rounded-lg"
                 >
                   <CheckCircle className="w-5 h-5 text-[#42d392]" />
-                  <span className="text-[#42d392]">Message envoyé avec succès !</span>
+                  <p className="text-white/70 mb-6">
+                    Merci pour votre message ! Je vous répondrai dans les plus brefs délais.
+                  </p>
                 </motion.div>
               )}
 
@@ -278,7 +278,7 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
                   className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-lg"
                 >
                   <AlertCircle className="w-5 h-5 text-red-400" />
-                  <span className="text-red-400">Erreur lors de l'envoi. Veuillez réessayer.</span>
+                  <span className="text-red-400">Erreur lors de l&apos;envoi. Veuillez réessayer.</span>
                 </motion.div>
               )}
 
@@ -294,9 +294,8 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#647eff] transition-all ${
-                      errors.name ? 'border-red-500' : 'border-white/10 focus:border-[#647eff]'
-                    }`}
+                    className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#647eff] transition-all ${errors.name ? 'border-red-500' : 'border-white/10 focus:border-[#647eff]'
+                      }`}
                     placeholder="Votre nom"
                   />
                   {errors.name && (
@@ -314,9 +313,8 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#647eff] transition-all ${
-                      errors.email ? 'border-red-500' : 'border-white/10 focus:border-[#647eff]'
-                    }`}
+                    className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#647eff] transition-all ${errors.email ? 'border-red-500' : 'border-white/10 focus:border-[#647eff]'
+                      }`}
                     placeholder="votre@email.com"
                   />
                   {errors.email && (
@@ -335,9 +333,8 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#647eff] transition-all ${
-                    errors.subject ? 'border-red-500' : 'border-white/10 focus:border-[#647eff]'
-                  }`}
+                  className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#647eff] transition-all ${errors.subject ? 'border-red-500' : 'border-white/10 focus:border-[#647eff]'
+                    }`}
                   placeholder="Sujet de votre message"
                 />
                 {errors.subject && (
@@ -355,9 +352,8 @@ export default function ContactClient({ personalInfo, socialLinks }: ContactClie
                   value={formData.message}
                   onChange={handleInputChange}
                   rows={6}
-                  className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#647eff] transition-all resize-none ${
-                    errors.message ? 'border-red-500' : 'border-white/10 focus:border-[#647eff]'
-                  }`}
+                  className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#647eff] transition-all resize-none ${errors.message ? 'border-red-500' : 'border-white/10 focus:border-[#647eff]'
+                    }`}
                   placeholder="Décrivez votre projet ou votre demande..."
                 />
                 {errors.message && (

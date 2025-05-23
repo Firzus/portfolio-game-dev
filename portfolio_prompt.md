@@ -114,7 +114,6 @@ Créer un portfolio moderne et dynamique pour un développeur de jeux vidéo, ut
 - **Menu hamburger** sur mobile
 - **Smooth scroll** vers les sections
 - **Indicateur de section active**
-- **Dark/Light mode toggle**
 - **Animation d'ouverture/fermeture**
 
 ## 👨‍💼 Partie Administrative
@@ -221,15 +220,6 @@ portfolio-game-dev/
 
 ## 📋 Fonctionnalités Avancées (Optionnelles)
 
-- **Mode présentation** (plein écran pour démos)
-- **Thèmes multiples** (pas seulement dark/light)
 - **Multilingue** (FR/EN)
-- **Blog intégré** pour articles techniques
 - **Système de commentaires** sur les projets
 - **API publique** pour les projets
-- **Progressive Web App** (PWA)
-- **Notifications push** pour nouveaux projets
-
----
-
-*Ce prompt couvre tous les aspects techniques et créatifs nécessaires pour créer un portfolio moderne et professionnel qui met en valeur vos compétences de Game Developer tout en démontrant votre expertise en développement web full-stack.*

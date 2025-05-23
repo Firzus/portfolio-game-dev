@@ -135,7 +135,7 @@ export default function LoginPage() {
                     >
                         {isSignUp
                             ? "Créez votre compte administrateur"
-                            : "Connectez-vous à votre espace d'administration"
+                            : "Connectez-vous à votre espace d&apos;administration"
                         }
                     </motion.p>
                 </div>
@@ -196,7 +196,7 @@ export default function LoginPage() {
                     {/* Username */}
                     <motion.div variants={itemVariants}>
                         <label className="block text-sm font-medium mb-2" style={{ color: 'var(--subheading-color)' }}>
-                            Nom d'utilisateur
+                            Nom d&apos;utilisateur
                         </label>
                         <div className="relative">
                             <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted" />

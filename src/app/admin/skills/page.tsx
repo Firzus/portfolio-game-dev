@@ -7,7 +7,6 @@ import {
     Edit,
     Trash2,
     Search,
-    Filter,
     Star,
     Code,
     Gamepad2,
@@ -17,7 +16,7 @@ import {
     Save,
     X
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -133,12 +132,23 @@ const colorOptions = [
     { value: 'yellow', label: 'Jaune', class: 'bg-yellow-500' }
 ];
 
+interface Skill {
+    id: number;
+    name: string;
+    category: string;
+    level: number;
+    icon: string;
+    color: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export default function AdminSkills() {
     const [skills, setSkills] = useState(mockSkills);
     const [searchTerm, setSearchTerm] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [showModal, setShowModal] = useState(false);
-    const [editingSkill, setEditingSkill] = useState<any>(null);
+    const [editingSkill, setEditingSkill] = useState<Skill | null>(null);
     const [formData, setFormData] = useState({
         name: '',
         category: 'Game Engines',
@@ -183,7 +193,7 @@ export default function AdminSkills() {
         setShowModal(true);
     };
 
-    const handleEditSkill = (skill: any) => {
+    const handleEditSkill = (skill: Skill) => {
         setEditingSkill(skill);
         setFormData({
             name: skill.name,
@@ -403,18 +413,18 @@ export default function AdminSkills() {
                                             <div className="flex items-start justify-between mb-3">
                                                 <div className="flex items-center gap-3">
                                                     <div className={`p-2 rounded-lg ${skill.color === 'blue' ? 'bg-blue-100 dark:bg-blue-900/30' :
-                                                            skill.color === 'green' ? 'bg-green-100 dark:bg-green-900/30' :
-                                                                skill.color === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30' :
-                                                                    skill.color === 'orange' ? 'bg-orange-100 dark:bg-orange-900/30' :
-                                                                        skill.color === 'red' ? 'bg-red-100 dark:bg-red-900/30' :
-                                                                            'bg-yellow-100 dark:bg-yellow-900/30'
+                                                        skill.color === 'green' ? 'bg-green-100 dark:bg-green-900/30' :
+                                                            skill.color === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30' :
+                                                                skill.color === 'orange' ? 'bg-orange-100 dark:bg-orange-900/30' :
+                                                                    skill.color === 'red' ? 'bg-red-100 dark:bg-red-900/30' :
+                                                                        'bg-yellow-100 dark:bg-yellow-900/30'
                                                         }`}>
                                                         <IconComponent className={`h-5 w-5 ${skill.color === 'blue' ? 'text-blue-600 dark:text-blue-400' :
-                                                                skill.color === 'green' ? 'text-green-600 dark:text-green-400' :
-                                                                    skill.color === 'purple' ? 'text-purple-600 dark:text-purple-400' :
-                                                                        skill.color === 'orange' ? 'text-orange-600 dark:text-orange-400' :
-                                                                            skill.color === 'red' ? 'text-red-600 dark:text-red-400' :
-                                                                                'text-yellow-600 dark:text-yellow-400'
+                                                            skill.color === 'green' ? 'text-green-600 dark:text-green-400' :
+                                                                skill.color === 'purple' ? 'text-purple-600 dark:text-purple-400' :
+                                                                    skill.color === 'orange' ? 'text-orange-600 dark:text-orange-400' :
+                                                                        skill.color === 'red' ? 'text-red-600 dark:text-red-400' :
+                                                                            'text-yellow-600 dark:text-yellow-400'
                                                             }`} />
                                                     </div>
                                                     <div>
@@ -451,9 +461,9 @@ export default function AdminSkills() {
                                             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                                                 <div
                                                     className={`h-2 rounded-full transition-all ${skill.level >= 9 ? 'bg-green-500' :
-                                                            skill.level >= 7 ? 'bg-blue-500' :
-                                                                skill.level >= 5 ? 'bg-yellow-500' :
-                                                                    'bg-gray-500'
+                                                        skill.level >= 7 ? 'bg-blue-500' :
+                                                            skill.level >= 5 ? 'bg-yellow-500' :
+                                                                'bg-gray-500'
                                                         }`}
                                                     style={{ width: `${skill.level * 10}%` }}
                                                 />
@@ -566,8 +576,8 @@ export default function AdminSkills() {
                                                     type="button"
                                                     onClick={() => setFormData(prev => ({ ...prev, icon: option.value }))}
                                                     className={`p-3 rounded-lg border transition-all ${formData.icon === option.value
-                                                            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30'
-                                                            : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+                                                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30'
+                                                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                                                         }`}
                                                 >
                                                     <IconComponent className="h-5 w-5 mx-auto" />
@@ -588,8 +598,8 @@ export default function AdminSkills() {
                                                 type="button"
                                                 onClick={() => setFormData(prev => ({ ...prev, color: option.value }))}
                                                 className={`w-8 h-8 rounded-lg ${option.class} transition-all ${formData.color === option.value
-                                                        ? 'ring-2 ring-offset-2 ring-blue-500'
-                                                        : 'hover:scale-110'
+                                                    ? 'ring-2 ring-offset-2 ring-blue-500'
+                                                    : 'hover:scale-110'
                                                     }`}
                                             />
                                         ))}

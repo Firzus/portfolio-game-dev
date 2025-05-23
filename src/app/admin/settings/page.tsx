@@ -11,8 +11,7 @@ import {
     Eye,
     EyeOff,
     Key,
-    Mail,
-    Globe
+    Mail
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -70,7 +69,7 @@ export default function AdminSettings() {
         maxBackups: 7
     });
 
-    const handleInputChange = (field: string, value: any) => {
+    const handleInputChange = (field: string, value: string | boolean | number) => {
         setSettings(prev => ({
             ...prev,
             [field]: value
@@ -151,7 +150,7 @@ export default function AdminSettings() {
 
                             <div>
                                 <label className="block text-sm font-medium mb-2" style={{ color: 'var(--subheading-color)' }}>
-                                    Nom d'utilisateur
+                                    Nom d&apos;utilisateur
                                 </label>
                                 <input
                                     type="text"

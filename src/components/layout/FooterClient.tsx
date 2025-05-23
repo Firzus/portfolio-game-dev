@@ -73,8 +73,8 @@ export default function FooterClient({ personalInfo, socialLinks }: FooterClient
                 {personalInfo?.title}
               </p>
               <p className="text-white/70 leading-relaxed max-w-md">
-                Passionné par la création d'expériences interactives et le développement 
-                d'applications modernes. Toujours à la recherche de nouveaux défis techniques.
+                Passionné par la création d&apos;expériences interactives et le développement
+                d&apos;applications modernes. Toujours à la recherche de nouveaux défis techniques.
               </p>
             </div>
 
@@ -113,7 +113,7 @@ export default function FooterClient({ personalInfo, socialLinks }: FooterClient
             <h4 className="text-lg font-semibold text-white mb-4">
               Me Suivre
             </h4>
-            
+
             {/* Social Links */}
             <div className="flex gap-3 mb-6">
               {socialLinks.map((social) => {

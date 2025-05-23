@@ -108,13 +108,13 @@ export default function AdminDashboard() {
             <span className="gradient-text">Dashboard</span> Admin
           </h1>
           <p className="vite-subheading text-left lg:text-left">
-            Bienvenue dans votre espace d'administration. Gérez votre portfolio de développeur de jeux vidéo.
+            Bienvenue dans votre espace d&apos;administration. Gérez votre portfolio de développeur de jeux vidéo.
           </p>
         </motion.div>
 
         {/* Stats Grid */}
         <motion.div variants={itemVariants} className="vite-grid vite-grid-2 lg:grid-cols-4">
-          {stats.map((stat, index) => (
+          {stats.map((stat) => (
             <motion.div
               key={stat.name}
               variants={itemVariants}
@@ -123,14 +123,14 @@ export default function AdminDashboard() {
             >
               <div className="flex items-center justify-between mb-4">
                 <div className={`p-3 rounded-xl ${stat.color === 'blue' ? 'bg-blue-100 dark:bg-blue-900/30' :
-                    stat.color === 'green' ? 'bg-green-100 dark:bg-green-900/30' :
-                      stat.color === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30' :
-                        'bg-orange-100 dark:bg-orange-900/30'
+                  stat.color === 'green' ? 'bg-green-100 dark:bg-green-900/30' :
+                    stat.color === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30' :
+                      'bg-orange-100 dark:bg-orange-900/30'
                   }`}>
                   <stat.icon className={`h-6 w-6 ${stat.color === 'blue' ? 'text-blue-600 dark:text-blue-400' :
-                      stat.color === 'green' ? 'text-green-600 dark:text-green-400' :
-                        stat.color === 'purple' ? 'text-purple-600 dark:text-purple-400' :
-                          'text-orange-600 dark:text-orange-400'
+                    stat.color === 'green' ? 'text-green-600 dark:text-green-400' :
+                      stat.color === 'purple' ? 'text-purple-600 dark:text-purple-400' :
+                        'text-orange-600 dark:text-orange-400'
                     }`} />
                 </div>
                 <Activity className="h-4 w-4 text-muted group-hover:text-green-500 transition-colors" />
@@ -201,7 +201,7 @@ export default function AdminDashboard() {
               </h2>
             </div>
             <div className="space-y-3">
-              {quickActions.map((action, index) => (
+              {quickActions.map((action) => (
                 <motion.button
                   key={action.title}
                   whileHover={{ scale: 1.02 }}
@@ -210,14 +210,14 @@ export default function AdminDashboard() {
                 >
                   <div className="flex items-start gap-3">
                     <div className={`p-2 rounded-lg ${action.color === 'blue' ? 'bg-blue-100 dark:bg-blue-900/30' :
-                        action.color === 'green' ? 'bg-green-100 dark:bg-green-900/30' :
-                          action.color === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30' :
-                            'bg-orange-100 dark:bg-orange-900/30'
+                      action.color === 'green' ? 'bg-green-100 dark:bg-green-900/30' :
+                        action.color === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30' :
+                          'bg-orange-100 dark:bg-orange-900/30'
                       }`}>
                       <action.icon className={`h-4 w-4 ${action.color === 'blue' ? 'text-blue-600 dark:text-blue-400' :
-                          action.color === 'green' ? 'text-green-600 dark:text-green-400' :
-                            action.color === 'purple' ? 'text-purple-600 dark:text-purple-400' :
-                              'text-orange-600 dark:text-orange-400'
+                        action.color === 'green' ? 'text-green-600 dark:text-green-400' :
+                          action.color === 'purple' ? 'text-purple-600 dark:text-purple-400' :
+                            'text-orange-600 dark:text-orange-400'
                         }`} />
                     </div>
                     <div className="flex-1">
@@ -241,7 +241,7 @@ export default function AdminDashboard() {
             🎮 Portfolio de <span className="gradient-text">Développeur de Jeux Vidéo</span>
           </h3>
           <p className="text-lg text-muted max-w-2xl mx-auto">
-            Votre espace d'administration est prêt ! Vous pouvez maintenant gérer vos projets de jeux vidéo,
+            Votre espace d&apos;administration est prêt ! Vous pouvez maintenant gérer vos projets de jeux vidéo,
             écrire des articles techniques, et présenter vos compétences en développement de jeux.
           </p>
         </motion.div>

@@ -7,19 +7,17 @@ import {
     Edit,
     Trash2,
     Search,
-    Filter,
     Star,
     ExternalLink,
     Github,
     Calendar,
-    Tag,
     Save,
     X,
     Eye,
-    Code,
     Gamepad2
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import Image from 'next/image';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -107,12 +105,26 @@ const availableTechnologies = [
     'UI/UX', 'Analytics', 'Optimization', 'Shaders', 'Audio'
 ];
 
+interface Project {
+    id: number;
+    title: string;
+    description: string;
+    shortDescription: string;
+    image: string;
+    demoUrl: string | null;
+    sourceUrl: string | null;
+    technologies: string[];
+    featured: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export default function AdminProjects() {
     const [projects, setProjects] = useState(mockProjects);
     const [searchTerm, setSearchTerm] = useState('');
     const [featuredFilter, setFeaturedFilter] = useState('all'); // all, featured, regular
     const [showModal, setShowModal] = useState(false);
-    const [editingProject, setEditingProject] = useState<any>(null);
+    const [editingProject, setEditingProject] = useState<Project | null>(null);
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -151,7 +163,7 @@ export default function AdminProjects() {
         setShowModal(true);
     };
 
-    const handleEditProject = (project: any) => {
+    const handleEditProject = (project: Project) => {
         setEditingProject(project);
         setFormData({
             title: project.title,
@@ -339,8 +351,8 @@ export default function AdminProjects() {
                                         key={filterOption.key}
                                         onClick={() => setFeaturedFilter(filterOption.key)}
                                         className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${featuredFilter === filterOption.key
-                                                ? 'bg-blue-600 text-white'
-                                                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                                            ? 'bg-blue-600 text-white'
+                                            : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                             }`}
                                     >
                                         {filterOption.label} ({filterOption.count})
@@ -379,9 +391,11 @@ export default function AdminProjects() {
                                 {/* Project Image */}
                                 <div className="relative mb-4 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 h-48">
                                     {project.image ? (
-                                        <img
+                                        <Image
                                             src={project.image}
                                             alt={project.title}
+                                            width={400}
+                                            height={192}
                                             className="w-full h-full object-cover"
                                         />
                                     ) : (
@@ -407,8 +421,8 @@ export default function AdminProjects() {
                                             whileTap={{ scale: 0.9 }}
                                             onClick={() => handleToggleFeatured(project.id)}
                                             className={`p-2 rounded-lg transition-colors ${project.featured
-                                                    ? 'bg-yellow-500 text-white'
-                                                    : 'bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-yellow-100 dark:hover:bg-yellow-900/30'
+                                                ? 'bg-yellow-500 text-white'
+                                                : 'bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-yellow-100 dark:hover:bg-yellow-900/30'
                                                 }`}
                                             title={project.featured ? 'Retirer de la vedette' : 'Mettre en vedette'}
                                         >
@@ -656,8 +670,8 @@ export default function AdminProjects() {
                                                 type="button"
                                                 onClick={() => handleTechnologyToggle(tech)}
                                                 className={`px-3 py-1 rounded-full text-sm transition-all ${formData.technologies.includes(tech)
-                                                        ? 'bg-blue-600 text-white'
-                                                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                                                    ? 'bg-blue-600 text-white'
+                                                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                                     }`}
                                             >
                                                 {tech}

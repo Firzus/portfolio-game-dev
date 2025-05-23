@@ -7,19 +7,17 @@ import {
     Edit,
     Trash2,
     Search,
-    Filter,
     Eye,
     EyeOff,
     Calendar,
-    Tag,
     Save,
     X,
-    ExternalLink,
     Clock,
     CheckCircle,
     AlertCircle
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import Image from 'next/image';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -87,10 +85,10 @@ const mockPosts = [
     },
     {
         id: 4,
-        title: 'Intégration de l\'IA dans les jeux vidéo',
+        title: 'Intégration de l&apos;IA dans les jeux vidéo',
         slug: 'integration-ia-jeux-video',
-        content: 'L\'intelligence artificielle révolutionne l\'industrie du jeu vidéo...',
-        excerpt: 'Comment l\'IA transforme le développement et l\'expérience de jeu.',
+        content: 'L&apos;intelligence artificielle révolutionne l&apos;industrie du jeu vidéo...',
+        excerpt: 'Comment l&apos;IA transforme le développement et l&apos;expérience de jeu.',
         image: '/images/ai-gaming.jpg',
         published: false,
         publishedAt: null,
@@ -106,12 +104,26 @@ const availableTags = [
     'Théorie', 'Créativité', 'Futur', 'Mobile', 'PC', 'Console'
 ];
 
+interface Post {
+    id: number;
+    title: string;
+    slug: string;
+    content: string;
+    excerpt: string;
+    image: string;
+    published: boolean;
+    publishedAt: Date | null;
+    tags: string[];
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export default function AdminBlog() {
     const [posts, setPosts] = useState(mockPosts);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('all'); // all, published, draft
     const [showModal, setShowModal] = useState(false);
-    const [editingPost, setEditingPost] = useState<any>(null);
+    const [editingPost, setEditingPost] = useState<Post | null>(null);
     const [formData, setFormData] = useState({
         title: '',
         slug: '',
@@ -159,7 +171,7 @@ export default function AdminBlog() {
         setShowModal(true);
     };
 
-    const handleEditPost = (post: any) => {
+    const handleEditPost = (post: Post) => {
         setEditingPost(post);
         setFormData({
             title: post.title,
@@ -375,8 +387,8 @@ export default function AdminBlog() {
                                         key={filterOption.key}
                                         onClick={() => setStatusFilter(filterOption.key)}
                                         className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${statusFilter === filterOption.key
-                                                ? 'bg-blue-600 text-white'
-                                                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                                            ? 'bg-blue-600 text-white'
+                                            : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                             }`}
                                     >
                                         {filterOption.label} ({filterOption.count})
@@ -416,9 +428,11 @@ export default function AdminBlog() {
                                     {/* Image */}
                                     <div className="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-lg flex-shrink-0 flex items-center justify-center">
                                         {post.image ? (
-                                            <img
+                                            <Image
                                                 src={post.image}
                                                 alt={post.title}
+                                                width={96}
+                                                height={96}
                                                 className="w-full h-full object-cover rounded-lg"
                                             />
                                         ) : (
@@ -454,8 +468,8 @@ export default function AdminBlog() {
                                                     whileTap={{ scale: 0.9 }}
                                                     onClick={() => handleTogglePublish(post.id)}
                                                     className={`p-2 rounded-lg transition-colors ${post.published
-                                                            ? 'text-orange-600 dark:text-orange-400 hover:bg-orange-100 dark:hover:bg-orange-900/30'
-                                                            : 'text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30'
+                                                        ? 'text-orange-600 dark:text-orange-400 hover:bg-orange-100 dark:hover:bg-orange-900/30'
+                                                        : 'text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30'
                                                         }`}
                                                     title={post.published ? 'Dépublier' : 'Publier'}
                                                 >
@@ -538,7 +552,7 @@ export default function AdminBlog() {
                         >
                             <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-xl font-semibold" style={{ color: 'var(--heading-color)' }}>
-                                    {editingPost ? 'Modifier l\'article' : 'Nouvel article'}
+                                    {editingPost ? 'Modifier l&apos;article' : 'Nouvel article'}
                                 </h2>
                                 <button
                                     onClick={() => setShowModal(false)}
@@ -552,7 +566,7 @@ export default function AdminBlog() {
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                     <div>
                                         <label className="block text-sm font-medium mb-2" style={{ color: 'var(--subheading-color)' }}>
-                                            Titre de l'article
+                                            Titre de l&apos;article
                                         </label>
                                         <input
                                             type="text"
@@ -601,7 +615,7 @@ export default function AdminBlog() {
                                             borderColor: 'var(--border-primary)',
                                             color: 'var(--heading-color)'
                                         }}
-                                        placeholder="Un bref résumé de l'article..."
+                                        placeholder="Un bref résumé de l&apos;article..."
                                     />
                                 </div>
 
@@ -652,8 +666,8 @@ export default function AdminBlog() {
                                                 type="button"
                                                 onClick={() => handleTagToggle(tag)}
                                                 className={`px-3 py-1 rounded-full text-sm transition-all ${formData.tags.includes(tag)
-                                                        ? 'bg-blue-600 text-white'
-                                                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                                                    ? 'bg-blue-600 text-white'
+                                                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                                     }`}
                                             >
                                                 #{tag}

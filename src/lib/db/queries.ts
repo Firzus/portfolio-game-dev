@@ -1,6 +1,6 @@
 import { db } from './index'
 import { projects, posts, skills, contactMessages, testimonials, gameDevWork } from './schema'
-import { desc, asc, eq } from 'drizzle-orm'
+import { desc, eq } from 'drizzle-orm'
 
 // Projects queries
 export async function getAllProjects() {

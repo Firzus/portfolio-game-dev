@@ -5,7 +5,7 @@ import { contactMessages } from '@/lib/db/schema'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, subject, message, newsletter } = body
+    const { name, email, subject, message } = body
 
     // Validation
     if (!name || !email || !subject || !message) {
@@ -28,10 +28,8 @@ export async function POST(request: NextRequest) {
     const newMessage = await db.insert(contactMessages).values({
       name: name.trim(),
       email: email.trim().toLowerCase(),
-      subject: subject.trim(),
-      message: message.trim(),
-      newsletter: newsletter || false,
-      read: false
+      subject: subject?.trim() || '',
+      message: message.trim()
     }).returning()
 
     // TODO: Send email notification using Resend

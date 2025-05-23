@@ -4,20 +4,16 @@ import { motion } from 'framer-motion';
 import {
     MessageSquare,
     Search,
-    Filter,
     Mail,
     MailOpen,
     Reply,
     Trash2,
     Calendar,
-    User,
     Phone,
-    ExternalLink,
-    Archive,
     Star,
     Clock
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -90,9 +86,21 @@ const mockMessages = [
     }
 ];
 
+interface Message {
+    id: number;
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+    replied: boolean;
+    starred: boolean;
+    createdAt: Date;
+    phone: string | null;
+}
+
 export default function AdminMessages() {
     const [messages, setMessages] = useState(mockMessages);
-    const [selectedMessage, setSelectedMessage] = useState<any>(null);
+    const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filter, setFilter] = useState('all'); // all, unread, read, starred
     const [replyText, setReplyText] = useState('');
@@ -111,7 +119,7 @@ export default function AdminMessages() {
         return matchesSearch && matchesFilter;
     });
 
-    const handleReply = (message: any) => {
+    const handleReply = (message: Message) => {
         setSelectedMessage(message);
         setShowReplyModal(true);
         setReplyText(`Bonjour ${message.name},\n\nMerci pour votre message concernant "${message.subject}".\n\n`);
@@ -241,8 +249,8 @@ export default function AdminMessages() {
                                     key={filterOption.key}
                                     onClick={() => setFilter(filterOption.key)}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filter === filterOption.key
-                                            ? 'bg-blue-600 text-white'
-                                            : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                                        ? 'bg-blue-600 text-white'
+                                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                         }`}
                                 >
                                     {filterOption.label} ({filterOption.count})
@@ -283,8 +291,8 @@ export default function AdminMessages() {
                                     key={message.id}
                                     whileHover={{ scale: 1.01 }}
                                     className={`p-4 border rounded-lg transition-all cursor-pointer ${!message.replied
-                                            ? 'border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10'
-                                            : 'border-gray-200 dark:border-gray-700'
+                                        ? 'border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10'
+                                        : 'border-gray-200 dark:border-gray-700'
                                         }`}
                                     style={{ borderColor: 'var(--border-primary)' }}
                                 >
@@ -339,8 +347,8 @@ export default function AdminMessages() {
                                                     handleToggleStar(message.id);
                                                 }}
                                                 className={`p-2 rounded-lg transition-colors ${message.starred
-                                                        ? 'text-yellow-500 bg-yellow-100 dark:bg-yellow-900/30'
-                                                        : 'text-gray-400 hover:text-yellow-500 hover:bg-yellow-100 dark:hover:bg-yellow-900/30'
+                                                    ? 'text-yellow-500 bg-yellow-100 dark:bg-yellow-900/30'
+                                                    : 'text-gray-400 hover:text-yellow-500 hover:bg-yellow-100 dark:hover:bg-yellow-900/30'
                                                     }`}
                                             >
                                                 <Star className={`h-4 w-4 ${message.starred ? 'fill-current' : ''}`} />
