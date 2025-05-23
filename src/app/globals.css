@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom scrollbar - Dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #606060;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Vite-style gradient text */
+.gradient-text {
+  background: linear-gradient(315deg, #42d392 25%, #647eff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Professional card styling */
+.vite-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.vite-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Button styles */
+.vite-button-primary {
+  background: linear-gradient(315deg, #42d392 25%, #647eff);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vite-button-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(100, 126, 255, 0.3);
+}
+
+.vite-button-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vite-button-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Section spacing */
+.vite-section {
+  padding: 120px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Main content spacing for sidebar */
+@media (min-width: 1024px) {
+  main {
+    margin-left: 112px; /* 80px sidebar width + 32px gap */
+  }
+}
+
+/* Ensure sections have proper spacing */
+.vite-section-with-sidebar {
+  padding: 120px 24px;
+  max-width: calc(1200px - 112px);
+  margin: 0 auto;
+}
+
+@media (max-width: 1023px) {
+  .vite-section-with-sidebar {
+    max-width: 1200px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* Typography */
+.vite-heading {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.vite-subheading {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 48px;
+}
+
+/* Grid layouts */
+.vite-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.vite-grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.vite-grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Background patterns */
+.vite-bg-pattern {
+  background-image: radial-gradient(circle at 25% 25%, rgba(100, 126, 255, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 75% 75%, rgba(66, 211, 146, 0.1) 0%, transparent 50%);
+}
+
+/* Code block styling */
+.vite-code {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #e5e7eb;
+}
+
+/* Tag/Badge styling */
+.vite-tag {
+  background: rgba(100, 126, 255, 0.15);
+  color: #647eff;
+  border: 1px solid rgba(100, 126, 255, 0.3);
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+  white-space: nowrap;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.vite-tag:hover {
+  background: rgba(100, 126, 255, 0.2);
+  border-color: rgba(100, 126, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.vite-tag-green {
+  background: rgba(66, 211, 146, 0.15);
+  color: #42d392;
+  border-color: rgba(66, 211, 146, 0.3);
+}
+
+.vite-tag-green:hover {
+  background: rgba(66, 211, 146, 0.2);
+  border-color: rgba(66, 211, 146, 0.4);
+}
+
+.vite-tag-purple {
+  background: rgba(168, 85, 247, 0.15);
+  color: #a855f7;
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.vite-tag-purple:hover {
+  background: rgba(168, 85, 247, 0.2);
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+.vite-tag-orange {
+  background: rgba(251, 146, 60, 0.15);
+  color: #fb923c;
+  border-color: rgba(251, 146, 60, 0.3);
+}
+
+.vite-tag-orange:hover {
+  background: rgba(251, 146, 60, 0.2);
+  border-color: rgba(251, 146, 60, 0.4);
+}
