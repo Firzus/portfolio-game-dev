@@ -78,7 +78,7 @@ export function isValidEmail(email: string): boolean {
   return emailRegex.test(email)
 }
 
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -90,7 +90,7 @@ export function debounce<T extends (...args: any[]) => any>(
   }
 }
 
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
@@ -109,7 +109,7 @@ export function scrollToElement(elementId: string, offset: number = 0): void {
   const element = document.getElementById(elementId)
   if (element) {
     const elementPosition = element.getBoundingClientRect().top
-    const offsetPosition = elementPosition + window.pageYOffset - offset
+    const offsetPosition = elementPosition + window.scrollY - offset
     
     window.scrollTo({
       top: offsetPosition,
