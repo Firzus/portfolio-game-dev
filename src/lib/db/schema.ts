@@ -1,67 +1,45 @@
 import { pgTable, serial, varchar, text, boolean, timestamp, date, integer } from 'drizzle-orm/pg-core'
 
-// Users table for admin authentication
-export const users = pgTable('users', {
-  id: serial('id').primaryKey(),
-  email: varchar('email', { length: 255 }).notNull().unique(),
-  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
-  name: varchar('name', { length: 255 }).notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-})
-
 // Projects table
 export const projects = pgTable('projects', {
   id: serial('id').primaryKey(),
   title: varchar('title', { length: 255 }).notNull(),
   description: text('description').notNull(),
-  longDescription: text('long_description'),
-  imageUrl: varchar('image_url', { length: 500 }),
-  technologies: text('technologies').array().notNull(),
-  category: varchar('category', { length: 50 }).notNull(),
-  githubUrl: varchar('github_url', { length: 500 }),
+  shortDescription: varchar('short_description', { length: 500 }),
+  image: varchar('image', { length: 500 }),
   demoUrl: varchar('demo_url', { length: 500 }),
-  youtubeUrl: varchar('youtube_url', { length: 500 }),
-  websiteUrl: varchar('website_url', { length: 500 }),
-  featured: boolean('featured').default(false).notNull(),
+  sourceUrl: varchar('source_url', { length: 500 }),
+  technologies: text('technologies').array(),
+  featured: boolean('featured').default(false),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
-// Experiences table
-export const experiences = pgTable('experiences', {
+// Blog posts table
+export const posts = pgTable('posts', {
   id: serial('id').primaryKey(),
-  company: varchar('company', { length: 255 }).notNull(),
-  position: varchar('position', { length: 255 }).notNull(),
-  description: text('description').notNull(),
-  technologies: text('technologies').array().notNull(),
-  startDate: date('start_date').notNull(),
-  endDate: date('end_date'),
-  logoUrl: varchar('logo_url', { length: 500 }),
-  location: varchar('location', { length: 255 }).notNull(),
+  title: varchar('title', { length: 255 }).notNull(),
+  slug: varchar('slug', { length: 255 }).notNull().unique(),
+  content: text('content').notNull(),
+  excerpt: varchar('excerpt', { length: 500 }),
+  image: varchar('image', { length: 500 }),
+  published: boolean('published').default(false),
+  publishedAt: timestamp('published_at'),
+  tags: text('tags').array(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-})
-
-// Education table
-export const education = pgTable('education', {
-  id: serial('id').primaryKey(),
-  institution: varchar('institution', { length: 255 }).notNull(),
-  degree: varchar('degree', { length: 255 }).notNull(),
-  field: varchar('field', { length: 255 }).notNull(),
-  description: text('description'),
-  startDate: date('start_date').notNull(),
-  endDate: date('end_date').notNull(),
-  logoUrl: varchar('logo_url', { length: 500 }),
-  location: varchar('location', { length: 255 }).notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
 // Skills table
 export const skills = pgTable('skills', {
   id: serial('id').primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
-  level: integer('level').notNull(),
+  name: varchar('name', { length: 100 }).notNull(),
   category: varchar('category', { length: 50 }).notNull(),
+  level: integer('level').notNull(), // 1-10
+  icon: varchar('icon', { length: 255 }),
+  color: varchar('color', { length: 50 }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
 // Contact messages table
@@ -69,34 +47,93 @@ export const contactMessages = pgTable('contact_messages', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),
   email: varchar('email', { length: 255 }).notNull(),
-  subject: varchar('subject', { length: 255 }).notNull(),
+  subject: varchar('subject', { length: 255 }),
   message: text('message').notNull(),
-  newsletter: boolean('newsletter').default(false).notNull(),
-  read: boolean('read').default(false).notNull(),
+  replied: boolean('replied').default(false),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 
-// Personal info table (for dynamic content management)
-export const personalInfo = pgTable('personal_info', {
+// Testimonials table
+export const testimonials = pgTable('testimonials', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),
-  title: varchar('title', { length: 255 }).notNull(),
-  bio: text('bio').notNull(),
-  email: varchar('email', { length: 255 }).notNull(),
-  location: varchar('location', { length: 255 }).notNull(),
-  avatarUrl: varchar('avatar_url', { length: 500 }),
-  resumeUrl: varchar('resume_url', { length: 500 }),
+  position: varchar('position', { length: 255 }),
+  company: varchar('company', { length: 255 }),
+  content: text('content').notNull(),
+  image: varchar('image', { length: 500 }),
+  rating: integer('rating').default(5),
+  featured: boolean('featured').default(false),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
-// Social links table
-export const socialLinks = pgTable('social_links', {
+// Game development work/experience table
+export const gameDevWork = pgTable('game_dev_work', {
+  id: serial('id').primaryKey(),
+  company: varchar('company', { length: 255 }).notNull(),
+  position: varchar('position', { length: 255 }).notNull(),
+  description: text('description').notNull(),
+  startDate: date('start_date').notNull(),
+  endDate: date('end_date'),
+  current: boolean('current').default(false),
+  location: varchar('location', { length: 255 }),
+  technologies: text('technologies').array(),
+  achievements: text('achievements').array(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
+
+// Users table for Better Auth avec support username
+export const users = pgTable('users', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),
-  url: varchar('url', { length: 500 }).notNull(),
-  icon: varchar('icon', { length: 50 }).notNull(),
-  order: integer('order').default(0).notNull(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  emailVerified: boolean('email_verified').default(false).notNull(),
+  image: varchar('image', { length: 500 }),
+  username: varchar('username', { length: 255 }).unique(),
+  displayUsername: varchar('display_username', { length: 255 }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
+
+// Sessions table for Better Auth
+export const sessions = pgTable('sessions', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull(),
+  token: varchar('token', { length: 255 }).notNull().unique(),
+  expiresAt: timestamp('expires_at').notNull(),
+  ipAddress: varchar('ip_address', { length: 255 }),
+  userAgent: varchar('user_agent', { length: 500 }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
+
+// Accounts table for Better Auth (pour email/password)
+export const accounts = pgTable('accounts', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull(),
+  accountId: varchar('account_id', { length: 255 }).notNull(),
+  providerId: varchar('provider_id', { length: 255 }).notNull(),
+  password: varchar('password', { length: 255 }),
+  accessToken: varchar('access_token', { length: 500 }),
+  refreshToken: varchar('refresh_token', { length: 500 }),
+  idToken: varchar('id_token', { length: 500 }),
+  accessTokenExpiresAt: timestamp('access_token_expires_at'),
+  refreshTokenExpiresAt: timestamp('refresh_token_expires_at'),
+  scope: varchar('scope', { length: 255 }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
+
+// Verification table for Better Auth
+export const verification = pgTable('verification', {
+  id: serial('id').primaryKey(),
+  identifier: varchar('identifier', { length: 255 }).notNull(),
+  token: varchar('token', { length: 255 }).notNull(),
+  value: varchar('value', { length: 255 }).notNull(),
+  expiresAt: timestamp('expires_at').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
 // Type exports for TypeScript
@@ -106,11 +143,8 @@ export type NewUser = typeof users.$inferInsert
 export type Project = typeof projects.$inferSelect
 export type NewProject = typeof projects.$inferInsert
 
-export type Experience = typeof experiences.$inferSelect
-export type NewExperience = typeof experiences.$inferInsert
-
-export type Education = typeof education.$inferSelect
-export type NewEducation = typeof education.$inferInsert
+export type Post = typeof posts.$inferSelect
+export type NewPost = typeof posts.$inferInsert
 
 export type Skill = typeof skills.$inferSelect
 export type NewSkill = typeof skills.$inferInsert
@@ -118,8 +152,10 @@ export type NewSkill = typeof skills.$inferInsert
 export type ContactMessage = typeof contactMessages.$inferSelect
 export type NewContactMessage = typeof contactMessages.$inferInsert
 
-export type PersonalInfo = typeof personalInfo.$inferSelect
-export type NewPersonalInfo = typeof personalInfo.$inferInsert
+export type Testimonial = typeof testimonials.$inferSelect
+export type NewTestimonial = typeof testimonials.$inferInsert
 
-export type SocialLink = typeof socialLinks.$inferSelect
-export type NewSocialLink = typeof socialLinks.$inferInsert
+export type GameDevWork = typeof gameDevWork.$inferSelect
+export type NewGameDevWork = typeof gameDevWork.$inferInsert
+
+export { accounts as account };

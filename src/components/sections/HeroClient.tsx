@@ -68,7 +68,7 @@ export default function HeroClient({ personalInfo }: HeroClientProps) {
           {/* Main Heading */}
           <motion.h1
             variants={itemVariants}
-            className="vite-heading text-center mb-6"
+            className="vite-heading text-center mb-6 text-hero-title"
           >
             Bonjour, je suis{' '}
             <span className="gradient-text">{personalInfo.name}</span>
@@ -77,7 +77,7 @@ export default function HeroClient({ personalInfo }: HeroClientProps) {
           {/* Subtitle */}
           <motion.h2
             variants={itemVariants}
-            className="text-2xl md:text-3xl font-medium text-white/80 mb-8"
+            className="text-hero-subtitle mb-8"
           >
             {personalInfo.title}
           </motion.h2>
@@ -85,7 +85,7 @@ export default function HeroClient({ personalInfo }: HeroClientProps) {
           {/* Description */}
           <motion.p
             variants={itemVariants}
-            className="vite-subheading text-center mb-12"
+            className="text-hero-description text-center mb-12 max-w-3xl mx-auto"
           >
             {personalInfo.bio}
           </motion.p>
@@ -129,7 +129,7 @@ export default function HeroClient({ personalInfo }: HeroClientProps) {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                  className="w-12 h-12 rounded-lg vite-card flex items-center justify-center text-gray-600 hover:text-gray-900 dark:text-white/70 dark:hover:text-white transition-all duration-300"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -142,16 +142,16 @@ export default function HeroClient({ personalInfo }: HeroClientProps) {
           {/* Scroll Indicator */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-col items-center text-white/50"
+            className="flex flex-col items-center text-muted"
           >
             <span className="text-sm mb-3 font-medium">Découvrir mon travail</span>
             <motion.button
               onClick={handleScrollToProjects}
-              className="p-3 rounded-full hover:bg-white/5 transition-colors group"
+              className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-white/5 transition-colors group"
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
-              <ChevronDown size={20} className="group-hover:text-white transition-colors" />
+              <ChevronDown size={20} className="text-gray-600 group-hover:text-gray-900 dark:text-white/50 dark:group-hover:text-white transition-colors" />
             </motion.button>
           </motion.div>
         </motion.div>

@@ -10,17 +10,19 @@ import Footer from '@/components/layout/Footer'
 export default function Home() {
   return (
     <>
-      <Sidebar />
-      <main className="min-h-screen">
-        <section id="hero">
-          <HeroSection />
-        </section>
-        <SkillsSection />
-        <ProjectsSection />
-        <ExperienceSection />
-        <EducationSection />
-        <ContactSection />
-      </main>
+      <div className="flex min-h-screen">
+        <Sidebar />
+        <main className="flex-1">
+          <section id="hero">
+            <HeroSection />
+          </section>
+          <SkillsSection />
+          <ProjectsSection />
+          <ExperienceSection />
+          <EducationSection />
+          <ContactSection />
+        </main>
+      </div>
       <Footer />
     </>
   )

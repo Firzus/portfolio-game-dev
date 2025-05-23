@@ -60,7 +60,7 @@ export default function FooterClient({ personalInfo, socialLinks }: FooterClient
   }
 
   return (
-    <footer className="relative bg-black/20 border-t border-white/10 z-10">
+    <footer className="relative bg-black/20 border-t border-white/10 z-30">
       <div className="vite-section py-16">
         <div className="vite-grid vite-grid-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand Section */}
