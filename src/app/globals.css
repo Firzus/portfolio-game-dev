@@ -5,308 +5,194 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
 
-/* CSS Variables for theme colors */
-:root {
-  --bg-primary: #f8fafc;
-  --bg-secondary: #ffffff;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --border-primary: rgba(0, 0, 0, 0.1);
-  --border-secondary: rgba(0, 0, 0, 0.05);
-  --card-bg: rgba(255, 255, 255, 0.8);
-  --card-border: rgba(0, 0, 0, 0.1);
-  --scrollbar-track: #f1f5f9;
-  --scrollbar-thumb: #cbd5e1;
-  --scrollbar-thumb-hover: #94a3b8;
-  
-  /* Text colors with better contrast */
-  --heading-color: #0f172a;
-  --subheading-color: #475569;
-  --muted-text: #64748b;
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html,
+  body {
+    @apply max-w-full overflow-x-hidden bg-black text-white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+
+  /* Smooth scrolling */
+  html {
+    @apply scroll-smooth;
+  }
 }
 
-.dark {
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #1a1a1a;
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.8);
-  --border-primary: rgba(255, 255, 255, 0.1);
-  --border-secondary: rgba(255, 255, 255, 0.05);
-  --card-bg: rgba(255, 255, 255, 0.05);
-  --card-border: rgba(255, 255, 255, 0.1);
-  --scrollbar-track: #1a1a1a;
-  --scrollbar-thumb: #404040;
-  --scrollbar-thumb-hover: #606060;
-  
-  /* Text colors for dark mode */
-  --heading-color: #ffffff;
-  --subheading-color: rgba(255, 255, 255, 0.8);
-  --muted-text: rgba(255, 255, 255, 0.6);
-}
+@layer components {
+  /* Vite-style gradient text */
+  .gradient-text {
+    background: linear-gradient(315deg, #42d392 25%, #647eff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+  /* Professional card styling */
+  .vite-card {
+    @apply bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm transition-all duration-300;
+  }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  .vite-card:hover {
+    @apply brightness-110 border-white/20 -translate-y-0.5;
+  }
+
+  /* Button styles */
+  .vite-button-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white transition-all duration-300;
+    background: linear-gradient(315deg, #42d392 25%, #647eff);
+  }
+
+  .vite-button-primary:hover {
+    @apply -translate-y-0.5;
+    box-shadow: 0 10px 25px rgba(100, 126, 255, 0.3);
+  }
+
+  .vite-button-secondary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-white bg-white/5 border border-white/10 transition-all duration-300;
+  }
+
+  .vite-button-secondary:hover {
+    @apply brightness-110 border-white/20 -translate-y-0.5;
+  }
+
+    /* Section spacing */  .vite-section {    @apply py-32 max-w-6xl mx-auto px-6;  }
+
+  /* Main content spacing for sidebar */
+  @media (min-width: 1024px) {
+    main {
+      @apply ml-28; /* 112px = 28 * 4px */
+    }
+  }
+
+    /* Ensure sections have proper spacing */  .vite-section-with-sidebar {    @apply py-32 px-6 mx-auto;    max-width: calc(1200px - 112px);  }
+
+  @media (max-width: 1023px) {
+    .vite-section-with-sidebar {
+      @apply max-w-6xl px-6;
+    }
+  }
+
+  /* Typography */
+  .vite-heading {
+    @apply text-6xl font-bold leading-tight mb-6 tracking-tight text-white;
+  }
+
+  .vite-subheading {
+    @apply text-xl text-white/80 leading-relaxed max-w-2xl mx-auto mb-12 font-medium;
+  }
+
+  /* Text utilities */
+  .text-muted {
+    @apply text-white/60;
+  }
+
+  .text-hero-title {
+    @apply text-white font-bold;
+  }
+
+  .text-hero-subtitle {
+    @apply text-white/80 font-medium text-2xl leading-snug;
+  }
+
+  .text-hero-description {
+    @apply text-white/60 text-lg leading-relaxed;
+  }
+
+  /* Grid layouts */
+  .vite-grid {
+    @apply grid gap-6;
+  }
+
+  .vite-grid-2 {
+    @apply grid-cols-1 md:grid-cols-2;
+  }
+
+  .vite-grid-3 {
+    @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+  }
+
+  /* Background patterns */
+  .vite-bg-pattern {
+    background-image: radial-gradient(circle at 25% 25%, rgba(100, 126, 255, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 75% 75%, rgba(66, 211, 146, 0.1) 0%, transparent 50%);
+  }
+
+  /* Code block styling */
+  .vite-code {
+    @apply bg-white/5 border border-white/10 rounded-lg p-4 font-mono text-sm text-white;
+  }
+
+  /* Tag/Badge styling */
+  .vite-tag {
+    @apply inline-block px-3 py-1.5 rounded-2xl text-xs font-semibold whitespace-nowrap leading-none transition-all duration-200;
+    background: rgba(100, 126, 255, 0.15);
+    color: #647eff;
+    border: 1px solid rgba(100, 126, 255, 0.3);
+  }
+
+  .vite-tag:hover {
+    @apply -translate-y-0.5;
+    background: rgba(100, 126, 255, 0.2);
+    border-color: rgba(100, 126, 255, 0.4);
+  }
+
+  .vite-tag-green {
+    background: rgba(66, 211, 146, 0.15);
+    color: #42d392;
+    border-color: rgba(66, 211, 146, 0.3);
+  }
+
+  .vite-tag-green:hover {
+    background: rgba(66, 211, 146, 0.2);
+    border-color: rgba(66, 211, 146, 0.4);
+  }
+
+  .vite-tag-purple {
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+    border-color: rgba(168, 85, 247, 0.3);
+  }
+
+  .vite-tag-purple:hover {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: rgba(168, 85, 247, 0.4);
+  }
+
+  .vite-tag-orange {
+    background: rgba(251, 146, 60, 0.15);
+    color: #fb923c;
+    border-color: rgba(251, 146, 60, 0.3);
+  }
+
+  .vite-tag-orange:hover {
+    background: rgba(251, 146, 60, 0.2);
+    border-color: rgba(251, 146, 60, 0.4);
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-/* Custom scrollbar - Theme aware */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Vite-style gradient text */
-.gradient-text {
-  background: linear-gradient(315deg, #42d392 25%, #647eff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Professional card styling - Theme aware */
-.vite-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-}
-
-.vite-card:hover {
-  background: var(--card-bg);
-  filter: brightness(1.1);
-  border-color: var(--border-primary);
-  transform: translateY(-2px);
-}
-
-/* Button styles */
-.vite-button-primary {
-  background: linear-gradient(315deg, #42d392 25%, #647eff);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.vite-button-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 25px rgba(100, 126, 255, 0.3);
-}
-
-.vite-button-secondary {
-  background: var(--card-bg);
-  color: var(--text-primary);
-  border: 1px solid var(--border-primary);
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.vite-button-secondary:hover {
-  filter: brightness(1.1);
-  border-color: var(--border-primary);
-  transform: translateY(-1px);
-}
-
-/* Section spacing */
-.vite-section {
-  padding: 120px 0;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-left: 24px;
-  padding-right: 24px;
-}
-
-/* Main content spacing for sidebar */
-@media (min-width: 1024px) {
-  main {
-    margin-left: 112px; /* 80px sidebar width + 32px gap */
-  }
-}
-
-/* Ensure sections have proper spacing */
-.vite-section-with-sidebar {
-  padding: 120px 24px;
-  max-width: calc(1200px - 112px);
-  margin: 0 auto;
-}
-
-@media (max-width: 1023px) {
-  .vite-section-with-sidebar {
-    max-width: 1200px;
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-}
-
-/* Typography with improved contrast */
-.vite-heading {
-  font-size: 3.5rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 24px;
-  letter-spacing: -0.02em;
-  color: var(--heading-color);
-}
-
-.vite-subheading {
-  font-size: 1.25rem;
-  color: var(--subheading-color);
-  line-height: 1.6;
-  max-width: 600px;
-  margin: 0 auto 48px;
-  font-weight: 500;
-}
-
-/* Muted text utility */
-.text-muted {
-  color: var(--muted-text);
-}
-
-/* Improved text hierarchy */
-.text-hero-title {
-  color: var(--heading-color);
-  font-weight: 700;
-}
-
-.text-hero-subtitle {
-  color: var(--subheading-color);
-  font-weight: 500;
-  font-size: 1.5rem;
-  line-height: 1.4;
-}
-
-.text-hero-description {
-  color: var(--muted-text);
-  font-size: 1.125rem;
-  line-height: 1.6;
-}
-
-/* Grid layouts */
-.vite-grid {
-  display: grid;
-  gap: 24px;
-}
-
-.vite-grid-2 {
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-}
-
-.vite-grid-3 {
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
-
-/* Background patterns */
-.vite-bg-pattern {
-  background-image: radial-gradient(circle at 25% 25%, rgba(100, 126, 255, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 75% 75%, rgba(66, 211, 146, 0.1) 0%, transparent 50%);
-}
-
-/* Code block styling - Theme aware */
-.vite-code {
-  background: var(--card-bg);
-  border: 1px solid var(--border-primary);
-  border-radius: 8px;
-  padding: 16px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  color: var(--text-primary);
-}
-
-/* Tag/Badge styling */
-.vite-tag {
-  background: rgba(100, 126, 255, 0.15);
-  color: #647eff;
-  border: 1px solid rgba(100, 126, 255, 0.3);
-  padding: 6px 12px;
-  border-radius: 16px;
-  font-size: 11px;
-  font-weight: 600;
-  display: inline-block;
-  white-space: nowrap;
-  line-height: 1;
-  transition: all 0.2s ease;
-}
-
-.vite-tag:hover {
-  background: rgba(100, 126, 255, 0.2);
-  border-color: rgba(100, 126, 255, 0.4);
-  transform: translateY(-1px);
-}
-
-.vite-tag-green {
-  background: rgba(66, 211, 146, 0.15);
-  color: #42d392;
-  border-color: rgba(66, 211, 146, 0.3);
-}
-
-.vite-tag-green:hover {
-  background: rgba(66, 211, 146, 0.2);
-  border-color: rgba(66, 211, 146, 0.4);
-}
-
-.vite-tag-purple {
-  background: rgba(168, 85, 247, 0.15);
-  color: #a855f7;
-  border-color: rgba(168, 85, 247, 0.3);
-}
-
-.vite-tag-purple:hover {
-  background: rgba(168, 85, 247, 0.2);
-  border-color: rgba(168, 85, 247, 0.4);
-}
-
-.vite-tag-orange {
-  background: rgba(251, 146, 60, 0.15);
-  color: #fb923c;
-  border-color: rgba(251, 146, 60, 0.3);
-}
-
-.vite-tag-orange:hover {
-  background: rgba(251, 146, 60, 0.2);
-  border-color: rgba(251, 146, 60, 0.4);
 }

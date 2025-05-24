@@ -58,10 +58,7 @@ export default function AdminSettings() {
         browserNotifications: false,
         marketingEmails: false,
 
-        // System settings
-        theme: 'auto',
-        language: 'fr',
-        timezone: 'Europe/Paris',
+        // System settings        language: 'fr',        timezone: 'Europe/Paris',
 
         // Database settings
         autoBackup: true,
@@ -377,45 +374,24 @@ export default function AdminSettings() {
                             </h2>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--subheading-color)' }}>
-                                    Thème
-                                </label>
-                                <select
-                                    value={settings.theme}
-                                    onChange={(e) => handleInputChange('theme', e.target.value)}
-                                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    style={{
-                                        background: 'var(--card-bg)',
-                                        borderColor: 'var(--border-primary)',
-                                        color: 'var(--heading-color)'
-                                    }}
-                                >
-                                    <option value="auto">Automatique</option>
-                                    <option value="light">Clair</option>
-                                    <option value="dark">Sombre</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--subheading-color)' }}>
-                                    Langue
-                                </label>
-                                <select
-                                    value={settings.language}
-                                    onChange={(e) => handleInputChange('language', e.target.value)}
-                                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    style={{
-                                        background: 'var(--card-bg)',
-                                        borderColor: 'var(--border-primary)',
-                                        color: 'var(--heading-color)'
-                                    }}
-                                >
-                                    <option value="fr">Français</option>
-                                    <option value="en">English</option>
-                                </select>
-                            </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">                            <div>
+                            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--subheading-color)' }}>
+                                Langue
+                            </label>
+                            <select
+                                value={settings.language}
+                                onChange={(e) => handleInputChange('language', e.target.value)}
+                                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                style={{
+                                    background: 'var(--card-bg)',
+                                    borderColor: 'var(--border-primary)',
+                                    color: 'var(--heading-color)'
+                                }}
+                            >
+                                <option value="fr">Français</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
 
                             <div>
                                 <label className="block text-sm font-medium mb-2" style={{ color: 'var(--subheading-color)' }}>
